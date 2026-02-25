@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fan Yidian (范益典) | Tsinghua University</title>
+  <meta name="description" content="Ph.D. student at Tsinghua University. Research on quantum control and quantum information." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       CSS Variables — change these to restyle the whole page
+    ============================================================ */
+    :root {
+      --primary:       #1a365d;   /* dark navy */
+      --accent:        #2b6cb0;   /* medium blue */
+      --accent-light:  #ebf4ff;   /* very light blue */
+      --text:          #2d3748;
+      --text-muted:    #718096;
+      --bg:            #f7fafc;
+      --card-bg:       #ffffff;
+      --border:        #e2e8f0;
+      --radius:        8px;
+      --shadow:        0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-hover:  0 4px 12px rgba(0,0,0,0.10);
+    }
+
+    /* ============================================================
+       Reset & Base
+    ============================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       Navigation
+    ============================================================ */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      background: rgba(255, 255, 255, 0.93);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 200;
+    }
+    .nav-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-links a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-links a:hover { background: var(--accent-light); color: var(--accent); text-decoration: none; }
+
+    /* ============================================================
+       Main Container
+    ============================================================ */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 78px 28px 60px;
+    }
+
+    /* ============================================================
+       Hero / Profile
+    ============================================================ */
+    .hero {
+      display: flex;
+      gap: 44px;
+      align-items: flex-start;
+      padding: 52px 0 44px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Profile photo — replace the SVG with:
+       <img src="photo.jpg" alt="Fan Yidian" />
+       and delete the <svg> element below.                       */
+    .photo-wrap {
+      flex-shrink: 0;
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--border);
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-wrap svg { width: 70px; height: 70px; fill: var(--accent); opacity: 0.35; }
+
+    .hero-body { flex: 1; min-width: 0; }
+
+    .hero-en {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+    .hero-cn {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin: 4px 0 16px;
+    }
+
+    .hero-meta { font-size: 14.5px; color: var(--text); margin-bottom: 5px; }
+    .hero-meta strong { color: var(--primary); font-weight: 600; }
+    .hero-sub { font-size: 13.5px; color: var(--text-muted); margin-bottom: 22px; }
+
+    /* Contact / link buttons */
+    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); text-decoration: none; }
+    .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn.primary:hover { background: var(--primary); border-color: var(--primary); }
+
+    /* ============================================================
+       Sections
+    ============================================================ */
+    section { padding: 42px 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+
+    .sec-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sec-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: var(--accent-light);
+      border-radius: 2px;
+    }
+
+    /* ============================================================
+       About
+    ============================================================ */
+    .about-en {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .about-cn {
+      font-size: 14px;
+      line-height: 1.85;
+      color: var(--text-muted);
+      border-left: 3px solid var(--accent-light);
+      padding-left: 14px;
+      margin-bottom: 28px;
+    }
+
+    /* Research interest tags */
+    .interest-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      padding: 5px 13px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid #bee3f8;
+      border-radius: 20px;
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       Publications
+    ============================================================ */
+    .pub-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .pub-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      transition: box-shadow 0.2s;
+    }
+    .pub-card:hover { box-shadow: var(--shadow-hover); }
+
+    .pub-title {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 7px;
+    }
+    .pub-title a { color: var(--text); }
+    .pub-title a:hover { color: var(--accent); }
+
+    .pub-authors {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .pub-authors .me { color: var(--text); font-weight: 600; }
+    .pub-equal { font-size: 11.5px; color: #999; }
+
+    .pub-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .badge-journal  { background: #e6fffa; color: #1d6a47; border: 1px solid #9ae6b4; }
+    .badge-preprint { background: #fff8f0; color: #9c4221; border: 1px solid #fbd38d; }
+
+    .pub-year { font-size: 13px; color: var(--text-muted); }
+
+    .pub-links { display: flex; gap: 7px; margin-top: 10px; }
+    .pub-link {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--accent);
+      padding: 2px 9px;
+      border: 1px solid #bee3f8;
+      border-radius: 4px;
+      transition: all 0.15s;
+    }
+    .pub-link:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ============================================================
+       Education Timeline
+    ============================================================ */
+    .timeline { padding-left: 22px; position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .edu-item { position: relative; margin-bottom: 30px; }
+    .edu-item:last-child { margin-bottom: 0; }
+    .edu-item::before {
+      content: '';
+      position: absolute;
+      left: -20px; top: 7px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .edu-degree { font-size: 15px; font-weight: 600; color: var(--text); }
+    .edu-school  { font-size: 14px; font-weight: 500; color: var(--accent); margin-top: 3px; }
+    .edu-detail  { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
+
+    /* ============================================================
+       Contact
+    ============================================================ */
+    .contact-body { font-size: 15px; }
+    .contact-body p { margin-bottom: 8px; }
+    .contact-addr { font-size: 13.5px; color: var(--text-muted); margin-top: 14px; line-height: 1.7; }
+
+    /* ============================================================
+       Footer
+    ============================================================ */
+    footer {
+      text-align: center;
+      padding: 30px 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--accent); }
+
+    /* ============================================================
+       Responsive
+    ============================================================ */
+    @media (max-width: 600px) {
+      .hero { flex-direction: column; align-items: center; text-align: center; gap: 24px; }
+      .hero-btns { justify-content: center; }
+      .nav-links { display: none; }
+      .hero-en { font-size: 1.7rem; }
+      .photo-wrap { width: 120px; height: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== Navigation ====== -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">Fan Yidian · 范益典</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ====== Hero ====== -->
+  <div class="hero">
+
+    <!--
+      PROFILE PHOTO
+      Option A (current): SVG placeholder — no photo needed.
+      Option B: Replace the entire <div class="photo-wrap">...</div> with:
+        <div class="photo-wrap">
+          <img src="photo.jpg" alt="Fan Yidian" />
+        </div>
+      Put your photo file (e.g., photo.jpg) in the same folder as index.html.
+    -->
+    <div class="photo-wrap">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z"/>
+      </svg>
+    </div>
+
+    <div class="hero-body">
+      <h1 class="hero-en">Fan Yidian</h1>
+      <div class="hero-cn">范益典</div>
+
+      <p class="hero-meta">
+        Ph.D. Student &nbsp;·&nbsp;
+        <strong>Department of Automation</strong> &nbsp;·&nbsp;
+        <strong>Tsinghua University</strong>
+      </p>
+      <p class="hero-sub">清华大学 自动化系 &nbsp;|&nbsp; Advisor: Prof. Re-Bing Wu (吴热冰)</p>
+
+      <div class="hero-btns">
+        <a href="mailto:fyd20@tsinghua.org.cn" class="btn primary">✉ fyd20@tsinghua.org.cn</a>
+        <a href="https://www.researchgate.net/profile/Yidian-Fan/research" target="_blank" class="btn">ResearchGate</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== About ====== -->
+  <section id="about">
+    <h2 class="sec-title">About Me</h2>
+
+    <p class="about-en">
+      I am a Ph.D. student in the
+      <a href="https://www.au.tsinghua.edu.cn/" target="_blank">Department of Automation at Tsinghua University</a>,
+      advised by Prof. Re-Bing Wu.
+      I received my B.Eng. degree in Automation from Beihang University (2020)
+      and my M.Eng. degree from Tsinghua Shenzhen International Graduate School (2023).
+    </p>
+    <p class="about-en">
+      My research lies at the intersection of <strong>control theory</strong> and <strong>quantum physics</strong>.
+      I am particularly interested in developing robust quantum control methods for
+      quantum information processing, and in leveraging machine learning techniques—especially
+      reinforcement learning—to tackle quantum control problems under model uncertainties and decoherence.
+    </p>
+
+    <p class="about-cn">
+      我是清华大学自动化系博士生，师从吴热冰教授。
+      我的研究方向是<strong>量子控制</strong>与<strong>量子信息</strong>，
+      致力于开发针对量子信息处理的鲁棒量子控制方法，
+      并将强化学习等机器学习技术应用于存在不确定性与退相干的量子控制问题。
+    </p>
+
+    <p class="interest-label">Research Interests</p>
+    <div class="tags">
+      <span class="tag">Quantum Control</span>
+      <span class="tag">Quantum Information</span>
+      <span class="tag">Robust Control</span>
+      <span class="tag">Reinforcement Learning</span>
+      <span class="tag">Open Quantum Systems</span>
+      <span class="tag">Quantum Control Landscapes</span>
+    </div>
+  </section>
+
+  <!-- ====== Publications ====== -->
+  <section id="publications">
+    <h2 class="sec-title">Publications</h2>
+    <div class="pub-list">
+
+      <!-- Paper 1 -->
+      <div class="pub-card">
+        <div class="pub-title">
+          <a href="https://www.nature.com/articles/s41534-025-01065-2" target="_blank">
+            Robust Quantum Control using Reinforcement Learning from Demonstration
+          </a>
+        </div>
+        <div class="pub-authors">
+          Shengyong Li<sup>†</sup>,&nbsp;
+          <span class="me">Yidian Fan</span><sup>†</sup>,&nbsp;
+          Xiang Li, Xinhui Ruan, Qianchuan Zhao, Zhihui Peng, Re-Bing Wu, Jing Zhang, Pengtao Song
+          &nbsp;<span class="pub-equal">(† equal contribution)</span>
+        </div>
+        <div class="pub-footer">
+          <span class="badge badge-journal">npj Quantum Information</span>
+          <span class="pub-year">2025</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="https://www.nature.com/articles/s41534-025-01065-2" target="_blank">[Paper]</a>
+          <a class="pub-link" href="https://github.com/littlebaker/RlfdQcontrol" target="_blank">[Code]</a>
+          <a class="pub-link" href="https://www.researchgate.net/publication/390248035_Robust_Quantum_Control_using_Reinforcement_Learning_from_Demonstration" target="_blank">[ResearchGate]</a>
+        </div>
+      </div>
+
+      <!-- Paper 2 -->
+      <div class="pub-card">
+        <div class="pub-title">
+          <a href="https://arxiv.org/abs/2409.15139" target="_blank">
+            The Top Manifold Connectedness of Quantum Control Landscapes
+          </a>
+        </div>
+        <div class="pub-authors">
+          <span class="me">Yidian Fan</span>,&nbsp;
+          Re-Bing Wu, Tak-San Ho, Gaurav Bhole, Herschel Rabitz
+        </div>
+        <div class="pub-footer">
+          <span class="badge badge-preprint">Preprint</span>
+          <span class="pub-year">2024</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="https://arxiv.org/abs/2409.15139" target="_blank">[arXiv]</a>
+        </div>
+      </div>
+
+      <!-- Paper 3 -->
+      <div class="pub-card">
+        <div class="pub-title">
+          Robust Control of High-dimensional Quantum Systems against Coherent and Incoherent Errors
+        </div>
+        <div class="pub-authors">
+          <span class="me">Yidian Fan</span>,&nbsp;
+          Re-Bing Wu
+        </div>
+        <div class="pub-footer">
+          <span class="badge badge-preprint">Preprint</span>
+          <span class="pub-year">2025</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="https://www.researchgate.net/profile/Yidian-Fan/research" target="_blank">[ResearchGate]</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== Education ====== -->
+  <section id="education">
+    <h2 class="sec-title">Education</h2>
+    <div class="timeline">
+
+      <div class="edu-item">
+        <div class="edu-degree">Ph.D. in Control Science and Engineering</div>
+        <div class="edu-school">Tsinghua University &nbsp;·&nbsp; 清华大学</div>
+        <div class="edu-detail">Department of Automation &nbsp;·&nbsp; 2023 – Present</div>
+        <div class="edu-detail">Advisor: Prof. Re-Bing Wu</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-degree">M.Eng. in Control Engineering</div>
+        <div class="edu-school">Tsinghua Shenzhen International Graduate School &nbsp;·&nbsp; 清华大学深圳国际研究生院</div>
+        <div class="edu-detail">2020 – 2023</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-degree">B.Eng. in Automation</div>
+        <div class="edu-school">Beihang University (BUAA) &nbsp;·&nbsp; 北京航空航天大学</div>
+        <div class="edu-detail">School of Automation Science and Electrical Engineering &nbsp;·&nbsp; 2016 – 2020</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== Contact ====== -->
+  <section id="contact">
+    <h2 class="sec-title">Contact</h2>
+    <div class="contact-body">
+      <p>I am always happy to discuss topics related to quantum control, quantum information, and related areas. Feel free to reach out!</p>
+      <p style="margin-top: 14px;">
+        ✉ &nbsp;<a href="mailto:fyd20@tsinghua.org.cn">fyd20@tsinghua.org.cn</a>
+      </p>
+      <p class="contact-addr">
+        Department of Automation, Tsinghua University<br />
+        Beijing 100084, P.R. China
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ====== Footer ====== -->
+<footer>
+  <p>© 2025 Fan Yidian (范益典) &nbsp;·&nbsp; Tsinghua University</p>
+  <p style="margin-top: 6px;">
+    <a href="https://www.researchgate.net/profile/Yidian-Fan/research" target="_blank">ResearchGate</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:fyd20@tsinghua.org.cn">Email</a>
+  </p>
+</footer>
+
+</body>
+</html>
