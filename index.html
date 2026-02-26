@@ -259,8 +259,9 @@
       letter-spacing: 0.03em;
       text-transform: uppercase;
     }
-    .badge-journal  { background: #e6fffa; color: #1d6a47; border: 1px solid #9ae6b4; }
-    .badge-preprint { background: #fff8f0; color: #9c4221; border: 1px solid #fbd38d; }
+    .badge-journal     { background: #e6fffa; color: #1d6a47; border: 1px solid #9ae6b4; }
+    .badge-conference  { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .badge-preprint    { background: #fff8f0; color: #9c4221; border: 1px solid #fbd38d; }
 
     .pub-year { font-size: 13px; color: var(--text-muted); }
 
@@ -312,6 +313,31 @@
     .edu-detail  { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
 
     /* ============================================================
+       Awards
+    ============================================================ */
+    .award-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .award-item {
+      display: flex;
+      gap: 16px;
+      align-items: baseline;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .award-year {
+      flex-shrink: 0;
+      min-width: 56px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid #bee3f8;
+      border-radius: 4px;
+      padding: 1px 7px;
+      text-align: center;
+    }
+    .award-text { color: var(--text); }
+
+    /* ============================================================
        Contact
     ============================================================ */
     .contact-body { font-size: 15px; }
@@ -353,6 +379,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#publications">Publications</a></li>
       <li><a href="#education">Education</a></li>
+      <li><a href="#awards">Awards</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
@@ -437,7 +464,30 @@
     <h2 class="sec-title">Publications</h2>
     <div class="pub-list">
 
-      <!-- Paper 1 -->
+      <!-- ── 2025 ── -->
+
+      <!-- PRA 2025 -->
+      <div class="pub-card">
+        <div class="pub-title">
+          <a href="https://link.aps.org/doi/10.1103/rrzb-zm1l" target="_blank">
+            Top Manifold Connectedness of Quantum Control Landscapes
+          </a>
+        </div>
+        <div class="pub-authors">
+          <span class="me">Yidian Fan</span>,&nbsp;
+          Re-Bing Wu, Tak-San Ho, Gaurav Bhole, Herschel Rabitz
+        </div>
+        <div class="pub-footer">
+          <span class="badge badge-journal">Phys. Rev. A</span>
+          <span class="pub-year">112, 022608 &nbsp;·&nbsp; 2025</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="https://link.aps.org/doi/10.1103/rrzb-zm1l" target="_blank">[Paper]</a>
+          <a class="pub-link" href="https://doi.org/10.1103/rrzb-zm1l" target="_blank">[DOI]</a>
+        </div>
+      </div>
+
+      <!-- npj QI 2025 -->
       <div class="pub-card">
         <div class="pub-title">
           <a href="https://www.nature.com/articles/s41534-025-01065-2" target="_blank">
@@ -457,45 +507,95 @@
         <div class="pub-links">
           <a class="pub-link" href="https://www.nature.com/articles/s41534-025-01065-2" target="_blank">[Paper]</a>
           <a class="pub-link" href="https://github.com/littlebaker/RlfdQcontrol" target="_blank">[Code]</a>
-          <a class="pub-link" href="https://www.researchgate.net/publication/390248035_Robust_Quantum_Control_using_Reinforcement_Learning_from_Demonstration" target="_blank">[ResearchGate]</a>
         </div>
       </div>
 
-      <!-- Paper 2 -->
+      <!-- CDC 2025 -->
       <div class="pub-card">
         <div class="pub-title">
-          <a href="https://arxiv.org/abs/2409.15139" target="_blank">
-            The Top Manifold Connectedness of Quantum Control Landscapes
+          <a href="https://ieeexplore.ieee.org/document/11312116" target="_blank">
+            Efficient Control Design in Open Quantum Systems under Parametric Uncertainty
           </a>
-        </div>
-        <div class="pub-authors">
-          <span class="me">Yidian Fan</span>,&nbsp;
-          Re-Bing Wu, Tak-San Ho, Gaurav Bhole, Herschel Rabitz
-        </div>
-        <div class="pub-footer">
-          <span class="badge badge-preprint">Preprint</span>
-          <span class="pub-year">2024</span>
-        </div>
-        <div class="pub-links">
-          <a class="pub-link" href="https://arxiv.org/abs/2409.15139" target="_blank">[arXiv]</a>
-        </div>
-      </div>
-
-      <!-- Paper 3 -->
-      <div class="pub-card">
-        <div class="pub-title">
-          Robust Control of High-dimensional Quantum Systems against Coherent and Incoherent Errors
         </div>
         <div class="pub-authors">
           <span class="me">Yidian Fan</span>,&nbsp;
           Re-Bing Wu
         </div>
         <div class="pub-footer">
-          <span class="badge badge-preprint">Preprint</span>
-          <span class="pub-year">2025</span>
+          <span class="badge badge-conference">CDC 2025</span>
+          <span class="pub-year">IEEE 64th Conference on Decision and Control &nbsp;·&nbsp; pp. 6685–6690</span>
         </div>
         <div class="pub-links">
-          <a class="pub-link" href="https://www.researchgate.net/profile/Yidian-Fan/research" target="_blank">[ResearchGate]</a>
+          <a class="pub-link" href="https://ieeexplore.ieee.org/document/11312116" target="_blank">[Paper]</a>
+          <a class="pub-link" href="https://doi.org/10.1109/CDC57313.2025.11312116" target="_blank">[DOI]</a>
+        </div>
+      </div>
+
+      <!-- ── 2024 ── -->
+
+      <!-- IEEE TAC 2024 -->
+      <div class="pub-card">
+        <div class="pub-title">
+          <a href="https://ieeexplore.ieee.org/document/10415484" target="_blank">
+            Theoretical Relationship of Set-Based Robust State Estimators: An Optimality Perspective
+          </a>
+        </div>
+        <div class="pub-authors">
+          <span class="me">Yidian Fan</span>,&nbsp;
+          Feng Xu
+        </div>
+        <div class="pub-footer">
+          <span class="badge badge-journal">IEEE Trans. Autom. Control</span>
+          <span class="pub-year">69(7): 4875–4882 &nbsp;·&nbsp; 2024</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="https://ieeexplore.ieee.org/document/10415484" target="_blank">[Paper]</a>
+          <a class="pub-link" href="https://doi.org/10.1109/TAC.2024.3359522" target="_blank">[DOI]</a>
+        </div>
+      </div>
+
+      <!-- ── 2023 ── -->
+
+      <!-- Automatica 2023 -->
+      <div class="pub-card">
+        <div class="pub-title">
+          <a href="https://www.sciencedirect.com/science/article/pii/S0005109823001759" target="_blank">
+            Exclusion Tendency-Based Observer Design Framework for Active Fault Diagnosis
+          </a>
+        </div>
+        <div class="pub-authors">
+          <span class="me">Yidian Fan</span>,&nbsp;
+          Feng Xu, Xueqian Wang, Bin Liang
+        </div>
+        <div class="pub-footer">
+          <span class="badge badge-journal">Automatica</span>
+          <span class="pub-year">153: 111020 &nbsp;·&nbsp; 2023</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="https://www.sciencedirect.com/science/article/pii/S0005109823001759" target="_blank">[Paper]</a>
+          <a class="pub-link" href="https://doi.org/10.1016/j.automatica.2023.111020" target="_blank">[DOI]</a>
+        </div>
+      </div>
+
+      <!-- ACC 2023 -->
+      <div class="pub-card">
+        <div class="pub-title">
+          <a href="https://ieeexplore.ieee.org/document/10156136" target="_blank">
+            A Smoothing Approach for Active Fault Diagnosis with a Unified Set Representation
+          </a>
+        </div>
+        <div class="pub-authors">
+          Haohao Qiu,&nbsp;
+          <span class="me">Yidian Fan</span>,&nbsp;
+          Feng Xu, Xueqian Wang
+        </div>
+        <div class="pub-footer">
+          <span class="badge badge-conference">ACC 2023</span>
+          <span class="pub-year">American Control Conference &nbsp;·&nbsp; pp. 4721–4728</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="https://ieeexplore.ieee.org/document/10156136" target="_blank">[Paper]</a>
+          <a class="pub-link" href="https://doi.org/10.23919/ACC55779.2023.10156136" target="_blank">[DOI]</a>
         </div>
       </div>
 
@@ -511,22 +611,62 @@
         <div class="edu-degree">Ph.D. in Control Science and Engineering</div>
         <div class="edu-school">Tsinghua University &nbsp;·&nbsp; 清华大学</div>
         <div class="edu-detail">Department of Automation &nbsp;·&nbsp; 2023 – Present</div>
-        <div class="edu-detail">Advisor: Prof. Re-Bing Wu</div>
+        <div class="edu-detail">Advisor: Prof. Re-Bing Wu &nbsp;·&nbsp; GPA: 3.9 / 4.0</div>
       </div>
 
       <div class="edu-item">
         <div class="edu-degree">M.Eng. in Control Engineering</div>
         <div class="edu-school">Tsinghua Shenzhen International Graduate School &nbsp;·&nbsp; 清华大学深圳国际研究生院</div>
-        <div class="edu-detail">2020 – 2023</div>
+        <div class="edu-detail">2020 – 2023 &nbsp;·&nbsp; GPA: 4.0 / 4.0</div>
       </div>
 
       <div class="edu-item">
         <div class="edu-degree">B.Eng. in Automation</div>
         <div class="edu-school">Beihang University (BUAA) &nbsp;·&nbsp; 北京航空航天大学</div>
         <div class="edu-detail">School of Automation Science and Electrical Engineering &nbsp;·&nbsp; 2016 – 2020</div>
+        <div class="edu-detail">GPA: 3.84 / 4.0 &nbsp;·&nbsp; Top 5% in Department</div>
       </div>
 
     </div>
+  </section>
+
+  <!-- ====== Awards ====== -->
+  <section id="awards">
+    <h2 class="sec-title">Awards &amp; Honors</h2>
+    <ul class="award-list">
+      <li class="award-item">
+        <span class="award-year">2025</span>
+        <span class="award-text">2nd Prize (6th / 263 teams), 4th CCF Quantum Computing Programming Challenge, Professional Track &mdash; 第四届CCF量子计算编程挑战赛专业赛道二等奖</span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2020–21</span>
+        <span class="award-text">Academic Excellence Scholarship (First Class), Tsinghua University &mdash; 清华大学学业成绩单项一等奖学金</span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2018–19</span>
+        <span class="award-text">Academic Excellence Scholarship (First Class), Beihang University &mdash; 北航学习优秀奖学金一等奖</span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2017–18</span>
+        <span class="award-text">Academic Excellence Scholarship (Second Class), Beihang University &mdash; 北航学习优秀奖学金二等奖</span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2016–17</span>
+        <span class="award-text">National Scholarship, Beihang University &mdash; 北航国家奖学金</span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2016–17</span>
+        <span class="award-text">Academic Excellence Scholarship (First Class), Beihang University &mdash; 北航学习优秀奖学金一等奖</span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2016–17</span>
+        <span class="award-text">Outstanding Student, Beihang University &mdash; 北航校级优秀生</span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2017</span>
+        <span class="award-text">2nd Prize, National College Mathematics Competition (Non-Mathematics), Beijing Region &mdash; 全国大学生数学竞赛（非数学类）北京赛区二等奖</span>
+      </li>
+    </ul>
   </section>
 
   <!-- ====== Contact ====== -->
