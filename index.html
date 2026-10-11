@@ -97,9 +97,6 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* Profile photo — replace the SVG with:
-       <img src="photo.jpg" alt="Fan Yidian" />
-       and delete the <svg> element below.                       */
     .photo-wrap {
       flex-shrink: 0;
       width: 148px;
@@ -112,7 +109,7 @@
       align-items: center;
       justify-content: center;
     }
-    .photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; }
+    .photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
     .photo-wrap svg { width: 70px; height: 70px; fill: var(--accent); opacity: 0.35; }
 
     .hero-body { flex: 1; min-width: 0; }
@@ -393,7 +390,7 @@
   <div class="hero">
 
     <div class="photo-wrap">
-      <img src="生活照.jpg" alt="Fan Yidian" />
+      <img src="avatar-cartoon-v1.png" alt="Cartoon portrait of Fan Yidian" />
     </div>
 
     <div class="hero-body">
