@@ -283,10 +283,12 @@
     /* ============================================================
        Interactive Demos
     ============================================================ */
-    .demo-intro { font-size: 15px; color: var(--text-muted); margin: -8px 0 22px; }
+    #demos { padding: 32px 0; }
+    #demos .sec-title { margin-bottom: 17px; }
+    .demo-intro { font-size: 13.5px; color: var(--text-muted); margin: -8px 0 15px; }
     .demo-card {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      grid-template-columns: 200px minmax(0, 1fr);
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -298,15 +300,15 @@
       align-items: center;
       background: #f0f6f7;
       border-right: 1px solid var(--border);
-      padding: 18px 10px;
+      padding: 10px;
     }
     .demo-preview img { display: block; width: 100%; height: auto; }
-    .demo-body { padding: 25px; min-width: 0; }
-    .demo-category { font-size: 10.5px; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
-    .demo-title { font-size: 19px; font-weight: 600; color: var(--primary); margin: 6px 0 10px; line-height: 1.4; }
-    .demo-description { font-size: 13.5px; line-height: 1.8; }
-    .demo-description-cn { font-size: 12.5px; line-height: 1.8; color: var(--text-muted); margin-top: 9px; }
-    .demo-body .btn { margin-top: 18px; }
+    .demo-body { padding: 16px 20px; min-width: 0; }
+    .demo-category { font-size: 9.5px; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
+    .demo-title { font-size: 17px; font-weight: 600; color: var(--primary); margin: 3px 0 6px; line-height: 1.4; }
+    .demo-description { font-size: 13px; line-height: 1.6; }
+    .demo-description-cn { font-size: 12px; line-height: 1.6; color: var(--text-muted); margin-top: 5px; }
+    .demo-body .btn { margin-top: 10px; padding: 5px 12px; font-size: 12.5px; }
     a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
     /* ============================================================
@@ -404,8 +406,9 @@
       .hero-en { font-size: 1.7rem; }
       .photo-wrap { width: 120px; height: 120px; }
       .demo-card { grid-template-columns: minmax(0, 1fr); }
-      .demo-preview { border-right: 0; border-bottom: 1px solid var(--border); padding: 14px; }
-      .demo-body { padding: 23px; }
+      .demo-preview { border-right: 0; border-bottom: 1px solid var(--border); justify-content: center; padding: 8px; }
+      .demo-preview img { max-width: 180px; }
+      .demo-body { padding: 15px 18px; }
     }
   </style>
 </head>
@@ -676,7 +679,7 @@
   <!-- ====== Interactive Demos ====== -->
   <section id="demos" aria-labelledby="demos-title">
     <h2 class="sec-title" id="demos-title">Interactive Demos</h2>
-    <p class="demo-intro">Explore quantum dynamics and metrology through interactive visualizations.</p>
+    <p class="demo-intro">Interactive visualizations of quantum dynamics and metrology.</p>
     <article class="demo-card">
       <a class="demo-preview" href="./demos/oat/" aria-label="Open the OAT spin-squeezing demo">
         <img src="./demos/oat/preview.webp" width="1100" height="700" loading="lazy" alt="A spin-squeezed covariance ellipsoid rotating around the z axis, with its projection onto the y–z plane." />
@@ -684,8 +687,8 @@
       <div class="demo-body">
         <p class="demo-category">QUANTUM METROLOGY</p>
         <h3 class="demo-title">OAT Spin Squeezing</h3>
-        <p class="demo-description">Prepare a squeezed spin state, align its axes, and encode a phase. Follow the covariance ellipsoid and its y–z projection as they evolve together.</p>
-        <p class="demo-description-cn" lang="zh-CN">自旋压缩与相位传感：拖动制备时间 τ 和编码相位 φ，观察三维椭球、中心轨迹及二维投影。</p>
+        <p class="demo-description">Explore spin squeezing, axis alignment, and phase encoding with linked 3D and 2D views.</p>
+        <p class="demo-description-cn" lang="zh-CN">自旋压缩、对齐与相位编码的交互演示。</p>
         <a class="btn primary" href="./demos/oat/">Open interactive demo <span aria-hidden="true">→</span></a>
       </div>
     </article>
