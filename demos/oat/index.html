@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+<title>OAT 自旋压缩 · 制备与相位编码</title>
+<meta name="description" content="精确有限N自旋压缩可视化：并排观察三维协方差椭球及y-z投影，独立控制制备时间τ、对齐旋转与相位φ，追踪中心轨迹。">
+<link rel="stylesheet" href="./style.css?v=phi-20261027">
+</head>
+<body><main>
+<a class="home-link" href="../../#demos">← Fan Yidian · Interactive Demos</a>
+<header><div><p class="eyebrow">QUANTUM METROLOGY / PART II</p><h1>压缩态，如何感知相位？<span>One-axis twisting</span></h1><p class="intro">τ 改变制备态的形状；φ 使整个椭球绕 z 轴旋转。两张图同步显示同一个态。</p></div><div class="badge">N = 100<span>精确有限 N 二阶矩</span></div></header>
+<section class="control-deck" aria-label="制备和编码控制">
+<div class="control-row"><button id="play" class="icon" aria-label="播放制备时间">▶</button><div class="slider-group"><label for="tau">制备时间 <span>τ = χt</span><output id="tauValue">0.0250</output></label><input type="range" id="tau" min="0" max="0.16" step="0.0001" value="0.025"></div><button id="align">对齐长轴到 z</button><button id="reset" class="secondary">全部重置</button></div>
+<div class="control-row phase-row"><button id="playPhi" class="icon" aria-label="播放相位编码">▶</button><div class="slider-group"><label for="phi">编码相位 <span>φ · 绕 z 轴</span><output id="phiValue">0.000 rad · 0.0°</output></label><input type="range" id="phi" min="-3.1415926536" max="3.1415926536" step="0.001" value="0"></div><button id="zeroPhi" class="secondary">φ 归零</button><label class="check"><input type="checkbox" id="trail" checked>显示轨迹</label></div>
+</section>
+<p class="scroll-hint">两图始终横向并列；窄屏可在图表区域左右滑动。</p>
+<div class="visuals-viewport" tabindex="0" aria-label="并排图表，窄屏可横向滚动"><section class="visuals" id="visuals">
+<article class="panel"><div class="panel-head"><div><span class="number">01</span><h2>三维椭球与中心轨迹</h2></div><span class="state" id="state">OAT 演化后</span></div><div class="canvas-wrap"><canvas id="ellipsoid" aria-label="固定Jx Jy Jz坐标中的三维协方差椭球及中心轨迹"></canvas></div><p class="plot-note">中心 <span id="center">(0, 0, 0)</span> · 固定实验室坐标 · 拖动转动视角</p></article>
+<article class="panel"><div class="panel-head"><div><span class="number">02</span><h2>固定 y–z 平面的投影</h2></div><span class="legend"><i></i>φ = 0 的投影</span></div><div class="canvas-wrap"><canvas id="projection" aria-label="当前态在固定Jy Jz平面的投影及中心轨迹"></canvas></div><p class="plot-note" id="alignmentText">改变 φ，观察投影中心与宽度的变化。</p></article>
+</section></div>
+<section class="metrics" aria-label="当前量子态的精确统计量"><div><span>当前信号 ⟨Jy⟩</span><strong id="mean">—</strong><small>⟨Jy⟩ = m sin φ，m 为制备后的平均自旋长度</small></div><div><span>当前读出方差 Var(Jy)</span><strong id="vy">—</strong><small>固定坐标中的投影宽度可随 φ 改变</small></div><div><span>QFI = 4 Var(Jz)</span><strong id="qfi">—</strong><small>固定制备态时，不随编码相位 φ 改变</small></div><div><span>最优对齐的 ξ<sub>R</sub><sup>2</sup></span><strong id="xi">—</strong><small>制备指标；在 φ = 0 比较均值读出与 SQL</small></div></section>
+<aside><b>沿着这条顺序观察</b><p>先拖动 τ 制备压缩态，再点“对齐长轴到 z”，最后拖动 φ。椭球的形状与大小保持不变，中心沿圆弧移动，椭球朝向也一起旋转；固定 y–z 平面的投影则可以变宽或变窄。</p><p class="fine">灰色虚线：φ = 0 的参考态与中心圆轨道。橙色线：从 0 到当前 φ 的中心路径。浅色轮廓：沿途的椭球。椭球只表示均值与协方差，并非完整量子态概率分布。</p></aside>
+<details><summary>公式与模型约定</summary>
+<div class="formula">Jα = ½∑ⱼσα⁽ʲ⁾，J = N/2；|ψ<sub>s</sub>⟩ = R<sub>x</sub>(α) exp(−iτJz²)|+⟩<sup>⊗N</sup>；|ψ<sub>φ</sub>⟩ = exp(−iφJz)|ψ<sub>s</sub>⟩。</div>
+<p>τ 是已知的制备时间，α 是已知的对齐角；φ 是随后编码、需要估计的相位。</p>
+<div class="formula">m = (N/2) cos<sup>N−1</sup>τ，⟨Jy⟩<sub>OAT</sub> = ⟨Jz⟩<sub>OAT</sub> = 0<br>Vx = N/4 + N(N−1)[1 + cos<sup>N−2</sup>(2τ)]/8 − N²cos<sup>2N−2</sup>τ/4<br>Vy = N/4 + N(N−1)[1 − cos<sup>N−2</sup>(2τ)]/8，Vz = N/4<br>C = N(N−1) sinτ cos<sup>N−2</sup>τ/4；V± = [Vy + Vz ± √((Vy − Vz)² + 4C²)]/2</div>
+<p>对齐角 α = ½ atan2(2C, Vz − Vy)，使制备后的协方差为 diag(Vx, V−, V+)。τ = 0 时 Vx = 0，三维椭球自然退化为圆盘。</p>
+<div class="formula">中心：⟨J⟩<sub>φ</sub> = m(cosφ, sinφ, 0)<br>协方差：Σ<sub>φ</sub> = R<sub>z</sub>(φ) Σ<sub>s</sub> R<sub>z</sub>(φ)<sup>T</sup>；三个主轴方差不变。<br>完成对齐后：Var<sub>φ</sub>(Jy) = Vx sin²φ + V− cos²φ，Var<sub>φ</sub>(Jz) = V+<br>ξ<sub>R</sub>² = NV− / m²；FQ = 4V+ ≥ N/ξ<sub>R</sub>²。</div>
+<p>ξ<sub>R</sub>²/(νN) 是 φ = 0 处线性均值估计的方差，并非一般的最优量子精度。较长制备时间的非高斯结构不能由协方差椭球完整表达。</p>
+</details>
+<footer><span>Kitagawa–Ueda · Phys. Rev. A 47, 5138 (1993)</span><a href="https://doi.org/10.1103/PhysRevA.47.5138" target="_blank" rel="noopener">原始工作 ↗</a><a href="./shear/">此前的线性剪切演示 ↗</a></footer>
+</main><script src="./app.js?v=phi-20261027"></script></body></html>

@@ -52,7 +52,7 @@
       z-index: 200;
     }
     .nav-inner {
-      max-width: 860px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 0 28px;
       height: 58px;
@@ -61,6 +61,7 @@
       justify-content: space-between;
     }
     .nav-brand {
+      flex-shrink: 0;
       font-size: 15px;
       font-weight: 700;
       color: var(--primary);
@@ -71,7 +72,7 @@
       font-size: 13.5px;
       font-weight: 500;
       color: var(--text-muted);
-      padding: 6px 12px;
+      padding: 6px 9px;
       border-radius: 6px;
       transition: background 0.15s, color 0.15s;
     }
@@ -156,7 +157,7 @@
     /* ============================================================
        Sections
     ============================================================ */
-    section { padding: 42px 0; border-bottom: 1px solid var(--border); }
+    section { padding: 42px 0; border-bottom: 1px solid var(--border); scroll-margin-top: 78px; }
     section:last-child { border-bottom: none; }
 
     .sec-title {
@@ -280,6 +281,35 @@
     }
 
     /* ============================================================
+       Interactive Demos
+    ============================================================ */
+    .demo-intro { font-size: 15px; color: var(--text-muted); margin: -8px 0 22px; }
+    .demo-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .demo-preview {
+      display: flex;
+      align-items: center;
+      background: #f0f6f7;
+      border-right: 1px solid var(--border);
+      padding: 18px 10px;
+    }
+    .demo-preview img { display: block; width: 100%; height: auto; }
+    .demo-body { padding: 25px; min-width: 0; }
+    .demo-category { font-size: 10.5px; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
+    .demo-title { font-size: 19px; font-weight: 600; color: var(--primary); margin: 6px 0 10px; line-height: 1.4; }
+    .demo-description { font-size: 13.5px; line-height: 1.8; }
+    .demo-description-cn { font-size: 12.5px; line-height: 1.8; color: var(--text-muted); margin-top: 9px; }
+    .demo-body .btn { margin-top: 18px; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+    /* ============================================================
        Education Timeline
     ============================================================ */
     .timeline { padding-left: 22px; position: relative; }
@@ -357,12 +387,25 @@
     /* ============================================================
        Responsive
     ============================================================ */
+    @media (max-width: 900px) {
+      .nav-inner { gap: 16px; }
+      .nav-links { overflow-x: auto; min-width: 0; padding: 8px 2px; }
+      .nav-links li { flex-shrink: 0; }
+      .nav-links a { padding: 6px 8px; font-size: 12.5px; white-space: nowrap; }
+    }
     @media (max-width: 600px) {
       .hero { flex-direction: column; align-items: center; text-align: center; gap: 24px; }
       .hero-btns { justify-content: center; }
-      .nav-links { display: none; }
+      .nav-inner { height: auto; min-height: 58px; flex-wrap: wrap; gap: 0; padding-top: 10px; padding-bottom: 4px; }
+      .nav-links { width: 100%; padding: 7px 0 9px; gap: 8px; }
+      .nav-links a { padding: 6px 3px; }
+      main { padding-top: 106px; }
+      section { scroll-margin-top: 112px; }
       .hero-en { font-size: 1.7rem; }
       .photo-wrap { width: 120px; height: 120px; }
+      .demo-card { grid-template-columns: minmax(0, 1fr); }
+      .demo-preview { border-right: 0; border-bottom: 1px solid var(--border); padding: 14px; }
+      .demo-body { padding: 23px; }
     }
   </style>
 </head>
@@ -376,6 +419,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#publications">Publications</a></li>
       <li><a href="#manuscripts">Manuscripts</a></li>
+      <li><a href="#demos">Demos</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#awards">Awards</a></li>
       <li><a href="#service">Service</a></li>
@@ -627,6 +671,24 @@
       </p>
 
     </div>
+  </section>
+
+  <!-- ====== Interactive Demos ====== -->
+  <section id="demos" aria-labelledby="demos-title">
+    <h2 class="sec-title" id="demos-title">Interactive Demos</h2>
+    <p class="demo-intro">Explore quantum dynamics and metrology through interactive visualizations.</p>
+    <article class="demo-card">
+      <a class="demo-preview" href="./demos/oat/" aria-label="Open the OAT spin-squeezing demo">
+        <img src="./demos/oat/preview.webp" width="1100" height="700" loading="lazy" alt="A spin-squeezed covariance ellipsoid rotating around the z axis, with its projection onto the y–z plane." />
+      </a>
+      <div class="demo-body">
+        <p class="demo-category">QUANTUM METROLOGY</p>
+        <h3 class="demo-title">OAT Spin Squeezing</h3>
+        <p class="demo-description">Prepare a squeezed spin state, align its axes, and encode a phase. Follow the covariance ellipsoid and its y–z projection as they evolve together.</p>
+        <p class="demo-description-cn" lang="zh-CN">自旋压缩与相位传感：拖动制备时间 τ 和编码相位 φ，观察三维椭球、中心轨迹及二维投影。</p>
+        <a class="btn primary" href="./demos/oat/">Open interactive demo <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
   </section>
 
   <!-- ====== Education ====== -->
