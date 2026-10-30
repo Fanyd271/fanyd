@@ -13,3 +13,13 @@ All demo asset links are relative so the site also works under the `/fanyd/` pro
 The exact OAT demo has no external runtime dependencies; the legacy shear demo retains its pinned CDN libraries.
 
 To preview locally, run `python3 -m http.server 8000` in this directory and open <http://localhost:8000/>.
+
+## Resource pages
+
+- `index.html`: profile, publications, education, awards, and service.
+- `demos/index.html`: interactive demo collection, available from the Demos navigation link.
+- `talks/index.html`: group meeting and presentation materials, available from the Talks navigation link.
+- `PPT/`: original presentation PDFs.
+- `assets/resources.css`: shared styles for the Demos and Talks pages.
+
+To add a presentation, put its PDF in `PPT/` and add a resource card in `talks/index.html` with its title, presentation date, description, and PDF links. Keep cards in reverse chronological order by presentation date, not PDF modification time. Presentation and demo cards are not displayed on the homepage.
