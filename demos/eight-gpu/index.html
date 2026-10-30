@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; frame-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>8卡分工与通信 · 并行训练笔记</title>
+  <meta name="description" content="用8张GPU的教学例子，理解张量并行、流水线并行和数据并行如何组合，并对照BLOOM、MT-NLG与Llama 3技术报告。">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">8×</span>并行训练笔记</a>
+      <nav class="site-nav" aria-label="学习页面"><a href="./" aria-current="page">8卡分工与通信</a><a href="microbatch.html">Microbatch 时间线</a></nav>
+    </div>
+  </header>
+  <main id="main">
+    <a class="back-link" href="../">← Fan Yidian · Demos</a>
+    <p class="eyebrow">01 / 模型、数据与通信</p>
+    <h1>8张GPU，如何一起训练一个模型？</h1>
+    <p class="lead">把8张卡看成两个4卡小组：每组把模型分成两段，每段再由两张卡合作计算。组与组之间处理不同文本，同步梯度后共同更新模型。</p>
+    <div class="equation">TP 2 × PP 2 × DP 2 = 8 张GPU<small>教学设定：40层、约130亿参数的稠密Transformer。该布局用于说明分工，实际配置还取决于显存、通信和负载。</small></div>
+    <section class="visual-section" aria-labelledby="allocation-heading">
+      <div class="visual-heading"><h2 id="allocation-heading">看清三种并行关系</h2><a href="visualizations/eight-gpu-parallelism.html" target="_blank" rel="noopener noreferrer">单独打开原始分工图 ↗</a></div>
+      <figure>
+        <div class="visual-frame"><iframe class="allocation-frame" src="visualizations/eight-gpu-parallelism.html" title="8张GPU的TP、PP和DP分组示意" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe></div>
+        <figcaption>切换“TP”“PP”“DP”查看不同通信关系。原始图文件逐字节保留，继续使用其沙盒iframe与CSP。</figcaption>
+      </figure>
+    </section>
+    <div class="reading">
+      <section aria-labelledby="three-dimensions">
+        <h2 id="three-dimensions">一次训练，三个并行维度</h2>
+        <h3>PP：按层拆分，串成流水线</h3>
+        <p>40层分成两段：第1段负责1～20层，第2段负责21～40层。输入嵌入可随第1段，输出头与loss可随第2段；实际训练还要平衡它们的负载。</p>
+        <p>同一批文本先经过第1段，再将中间激活传给第2段。反向传播时，第2段把对这些激活的梯度传回第1段。多个microbatch可以让不同段同时工作。</p>
+        <h3>TP：将一层内部的大矩阵拆给两张卡</h3>
+        <p>例如权重矩阵W的形状为5120×20480，可以按列拆成两个5120×10240的矩阵。两张卡接收同一份输入x，各自负责一半输出维度：</p>
+        <div class="formula">W = [W<sub>a</sub> W<sub>b</sub>]<br>xW = [xW<sub>a</sub> xW<sub>b</sub>]</div>
+        <p>后续算子可以继续处理分片，或在必要位置通信合并。注意力层和MLP的具体切法不同，但这里的两张卡始终是在合作处理同一批样本。</p>
+        <h3>DP：让两组模型处理不同文本</h3>
+        <p>副本A与副本B具有相同的逻辑结构和参数，各自处理不同数据。反向传播后，持有同一位置参数分片的GPU同步梯度。例如GPU 0与GPU 4对应，GPU 1与GPU 5对应。</p>
+        <p>GPU 0与GPU 1持有不同的矩阵分片，不能把它们的参数梯度当成同一参数直接平均。完成本次所需的梯度累积和同步后，各卡更新自己负责的参数。</p>
+      </section>
+      <section aria-labelledby="batch-count">
+        <h2 id="batch-count">8张卡，不等于8倍独立样本</h2>
+        <p>假设每个microbatch含2条序列，每个副本在一次更新前处理8个microbatch。只有DP维度增加独立样本数量：</p>
+        <div class="formula">全局batch = DP × 每副本microbatch数 × microbatch大小<br>= 2 × 8 × 2 = 32条序列</div>
+        <p>若每条序列长2048 tokens，一次更新使用65536 tokens。TP和PP是在合作完成这些样本的计算，不额外增加独立样本数量。</p>
+        <p class="note">代码中的batch_size有时表示每进程装载量，有时表示全局batch，必须先看配置的定义。下一页专门解释microbatch、梯度累积和一次参数更新之间的关系。</p>
+      </section>
+      <section aria-labelledby="reports">
+        <h2 id="reports">公开技术报告中的实际配置</h2>
+        <p>这些报告展示了同一思路如何扩展到数百、上万张GPU。表中的数字来自对应报告，和上面的8卡教学配置分开看。</p>
+        <div class="table-wrap"><table class="report-table"><thead><tr><th scope="col">模型与报告</th><th scope="col">公开配置</th><th scope="col">阅读重点</th></tr></thead><tbody>
+          <tr><td><a href="https://arxiv.org/html/2211.05100v4#S3.SS4" target="_blank" rel="noopener noreferrer">BLOOM · 176B</a></td><td>TP=4，PP=12，DP=8；总计384张A100，另用ZeRO-1。</td><td>第3.4.2节、图6：48卡合作计算一份逻辑模型，形成8个数据并行副本；ZeRO-1分片保存优化器状态。</td></tr>
+          <tr><td><a href="https://arxiv.org/html/2201.11990v3" target="_blank" rel="noopener noreferrer">MT-NLG · 530B</a></td><td>TP=8，PP=35；每份逻辑模型跨280张A100，再用DP扩展。</td><td>第2.2节：TP优先放在节点内，PP扩展到节点之间，并按通信拓扑安排分组。</td></tr>
+          <tr><td><a href="https://arxiv.org/html/2407.21783v3#S3.SS3.SSS2" target="_blank" rel="noopener noreferrer">Llama 3 · 405B</a></td><td>一个8K上下文配置：TP=8、PP=16、CP=1、DP=128，共16384张GPU。</td><td>第3.3.2节、图5、表4：四维并行；DP具体采用FSDP，存储方式与普通DP不同。</td></tr>
+        </tbody></table></div>
+        <p>Llama 3表4中的128K上下文配置改为TP=8、PP=16、CP=16、DP=8，总数仍为16384。CP是上下文并行，用于分担同一长序列的计算；序列变长后，并行布局也随之调整。</p>
+      </section>
+      <section class="references" aria-labelledby="further-reading">
+        <h2 id="further-reading">继续阅读</h2>
+        <ol>
+          <li><a href="https://huggingface.co/blog/bloom-megatron-deepspeed" target="_blank" rel="noopener noreferrer">The Technology Behind BLOOM Training</a>：图解较多，适合先理解DP、TP、PP与ZeRO的组合。</li>
+          <li><a href="https://arxiv.org/html/2104.04473v5" target="_blank" rel="noopener noreferrer">Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM</a>：重点看第2节、图2～4，以及第3节的通信、流水线空泡和microbatch分析。</li>
+          <li><a href="https://docs.nvidia.com/nemo/megatron-bridge/latest/parallelisms.html" target="_blank" rel="noopener noreferrer">NVIDIA Parallelisms Guide</a>：对照不同并行维度与通信方式。</li>
+        </ol>
+      </section>
+    </div>
+    <a class="page-link" href="microbatch.html"><div><span>接着看一次训练更新</span><strong>Microbatch、前向、反向如何交错？</strong></div><b aria-hidden="true">→</b></a>
+  </main>
+  <footer class="site-footer"><p>并行训练笔记 · 8卡教学例子与公开报告对照 · 原图保持独立，解释随页阅读。</p></footer>
+</body>
+</html>

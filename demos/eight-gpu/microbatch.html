@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; frame-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Microbatch 与 1F1B 时间线 · 并行训练笔记</title>
+  <meta name="description" content="沿用8卡TP=2、PP=2、DP=2例子，用可交互1F1B时间线说明microbatch、梯度累积、前后向交错与DP同步。">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">8×</span>并行训练笔记</a>
+    <nav class="site-nav" aria-label="学习页面"><a href="./">8卡分工与通信</a><a href="microbatch.html" aria-current="page">Microbatch 时间线</a></nav>
+  </div></header>
+  <main id="main">
+    <a class="back-link" href="../">← Fan Yidian · Demos</a>
+    <p class="eyebrow">02 / 从小数据包到一次参数更新</p>
+    <h1>Microbatch很小，更新的batch可以很大。</h1>
+    <p class="lead">microbatch是一次送进流水线的小数据包；global batch是用于一次参数更新的全部数据。前向与反向会执行多次，参数更新只发生一次。</p>
+    <div class="equation">全局batch = DP × m × b = 2 × 8 × 2 = 32条序列<small>b：microbatch大小；m：每副本在一次更新前处理的microbatch数。本例每个副本处理16条不同序列，两个副本合计32条。</small></div>
+    <section class="visual-section" aria-labelledby="timeline-heading">
+      <div class="visual-heading"><h2 id="timeline-heading">沿着时间看一次更新</h2><a href="visualizations/microbatch-timeline.html" target="_blank" rel="noopener noreferrer">单独打开时间线 ↗</a></div>
+      <figure>
+        <div class="visual-frame"><iframe class="timeline-frame" src="visualizations/microbatch-timeline.html" title="8张GPU的同步1F1B前向、反向与梯度同步时间线" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe></div>
+        <figcaption>拖动时间游标查看各段在做什么。每条计算泳道代表两张TP卡，四条泳道覆盖8张GPU。横轴为示意时隙，不是实测耗时。</figcaption>
+      </figure>
+    </section>
+    <div class="reading">
+      <section aria-labelledby="batch-definition">
+        <h2 id="batch-definition">先分清三个数量</h2>
+        <ol>
+          <li><strong>一个microbatch：2条序列。</strong>这2条序列由一份模型副本的4张卡合作计算，先经过前20层，再经过后20层。</li>
+          <li><strong>每副本一次更新前：8个microbatch。</strong>共16条序列。每个microbatch都要完成前向、计算loss和反向，并累积参数梯度。</li>
+          <li><strong>全局batch：32条序列。</strong>副本A和副本B读取不同文本，两个副本的梯度同步后，更新一次参数。TP和PP不增加独立样本数。</li>
+        </ol>
+        <p>若每条序列长2048 tokens，一次更新使用65536 tokens。配置中的batch_size不一定等于global batch，需确认它表示的是每进程装载量还是全局有效batch。</p>
+      </section>
+      <section aria-labelledby="read-timeline">
+        <h2 id="read-timeline">怎样读这张时间线</h2>
+        <p>F1表示microbatch 1的前向，B1表示它的反向；G是数据并行的梯度同步，U是参数更新。副本A和B中相同编号的microbatch对应不同文本。</p>
+        <ul>
+          <li><strong>0→1：</strong>前段做F1；后段尚未收到激活，等待流水线填充。</li>
+          <li><strong>1→2：</strong>前段做F2，同时后段做F1。不同段处理不同microbatch。</li>
+          <li><strong>3→4：</strong>前段做B1，同时后段做F2。前向与反向已经交错，但参数还未更新。</li>
+          <li><strong>17→18：</strong>后段已完成8个microbatch的回传，开始后段DP同步；前段同时做最后一次B8。</li>
+          <li><strong>18→19：</strong>前段完成回传，开始前段DP同步。最后等待必要同步完成。</li>
+          <li><strong>19→20：</strong>各卡更新自己负责的参数分片，完成这一次全局batch的训练。</li>
+        </ul>
+        <p class="note">这是一个便于阅读的同步1F1B安排：假设前后向等长，将每段DP同步合并为一个方块，未单独展开逐层TP通信和逐microbatch的PP传输耗时。真实实现通常按梯度桶通信，并可与最后的反向计算进一步重叠。</p>
+      </section>
+      <section aria-labelledby="gradient-accumulation">
+        <h2 id="gradient-accumulation">反向8次，参数只更新1次</h2>
+        <p>1F1B指预热后交替执行前向和反向，不表示每次反向就执行optimizer.step。第一次反向结束时，梯度写入累积缓冲；后续microbatch继续贡献梯度，而参数保持本次更新开始时的版本。</p>
+        <p>若每个microbatch的loss已经对其中2条序列取平均，梯度可以写成：</p>
+        <div class="formula">g<sub>A</sub> = (g<sub>A1</sub> + … + g<sub>A8</sub>) / 8<br>g<sub>B</sub> = (g<sub>B1</sub> + … + g<sub>B8</sub>) / 8<br>g = (g<sub>A</sub> + g<sub>B</sub>) / 2</div>
+        <p>最后使用全局平均梯度g执行一次优化器更新。这些式子针对相同长度、相同权重的microbatch；若有效token数不同，平均方式也需要按定义调整。</p>
+        <p>在普通DDP里，可用no_sync()让前几个microbatch先累积，最后再同步。它延后的是DP梯度同步，不能省略模型计算所需的TP或PP通信。</p>
+      </section>
+      <section aria-labelledby="three-communications">
+        <h2 id="three-communications">三种通信，传的内容不同</h2>
+        <div class="table-wrap"><table><thead><tr><th scope="col">通信</th><th scope="col">传什么</th><th scope="col">什么时候发生</th></tr></thead><tbody>
+          <tr><td>TP · 层内协作</td><td>分片激活、部分结果，以及反向所需的对应梯度。</td><td>包含在每个F或B方块内部，按具体层的切分方式发生。</td></tr>
+          <tr><td>PP · 相邻段传递</td><td>前向传中间激活，反向传对激活的梯度。</td><td>每个microbatch经过流水线边界时发生。</td></tr>
+          <tr><td>DP · 跨副本同步</td><td>同一位置参数分片的梯度，例如GPU 0↔4、GPU 1↔5。</td><td>本图按每段完成累积后启动；真实实现可分桶并重叠通信。</td></tr>
+        </tbody></table></div>
+      </section>
+      <section aria-labelledby="why-pipeline">
+        <h2 id="why-pipeline">为什么要把前后向交错？</h2>
+        <p>如果先执行所有microbatch的前向，再统一反向，就要保留更多待回传的激活。1F1B让部分反向更早开始；某个microbatch完成回传后，其不再需要的激活可以更早释放。</p>
+        <p>流水线仍然存在填充、排空和等待，图中的留白就是这些等待。因此多卡数量、microbatch数量和最终加速比不能直接划等号。</p>
+      </section>
+      <section class="references" aria-labelledby="sources">
+        <h2 id="sources">对照原文</h2>
+        <ol>
+          <li><a href="https://arxiv.org/html/2104.04473v5" target="_blank" rel="noopener noreferrer">Megatron-LM 2021</a>：第2.2节、图3和图4讨论GPipe、1F1B、流水线空泡与优化器更新语义；第3.1节给出全局batch和microbatch的关系。</li>
+          <li><a href="https://docs.pytorch.org/docs/2.10/generated/torch.nn.parallel.DistributedDataParallel.html#torch.nn.parallel.DistributedDataParallel.no_sync" target="_blank" rel="noopener noreferrer">PyTorch DDP no_sync()</a>：说明梯度累积与延后同步的用法。</li>
+        </ol>
+      </section>
+    </div>
+    <a class="page-link" href="./"><div><span>回到并行分组</span><strong>8卡分工与通信</strong></div><b aria-hidden="true">←</b></a>
+  </main>
+  <footer class="site-footer"><p>并行训练笔记 · TP=2 / PP=2 / DP=2 · 时间线为教学示意，不代表实测性能。</p></footer>
+</body>
+</html>

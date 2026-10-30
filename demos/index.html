@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Demos | Fan Yidian (范益典)</title>
-  <meta name="description" content="Interactive visualizations of quantum dynamics and metrology by Fan Yidian." />
+  <meta name="description" content="Interactive visualizations of quantum dynamics, metrology, and parallel training by Fan Yidian." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/resources.css" />
@@ -30,8 +30,8 @@
     <p class="breadcrumbs"><a href="../">Home</a><span aria-hidden="true">/</span>Demos</p>
     <header class="page-header">
       <h1 class="page-title">Interactive Demos</h1>
-      <p class="page-intro">Interactive visualizations of quantum dynamics and metrology.</p>
-      <p class="page-intro-cn" lang="zh-CN">量子动力学与量子计量的交互演示。</p>
+      <p class="page-intro">Interactive visualizations of quantum systems and parallel training.</p>
+      <p class="page-intro-cn" lang="zh-CN">量子动力学、量子计量与多GPU并行训练的交互演示。</p>
     </header>
     <div class="resource-list">
       <article class="resource-card" aria-labelledby="oat-title">
@@ -45,6 +45,20 @@
           <p class="resource-description-cn" lang="zh-CN">自旋压缩、对齐与相位编码的交互演示。</p>
           <div class="resource-actions">
             <a class="btn primary" href="./oat/">Open interactive demo <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
+      <article class="resource-card" aria-labelledby="eight-gpu-title">
+        <a class="resource-preview" href="./eight-gpu/" aria-label="Open the 8-GPU parallel training demo">
+          <img src="./eight-gpu/preview.webp" width="900" height="613" loading="lazy" alt="Eight GPUs grouped by tensor, pipeline, and data parallelism, with communication links between the groups." />
+        </a>
+        <div class="resource-body">
+          <p class="resource-category">DISTRIBUTED TRAINING</p>
+          <h2 class="resource-title" id="eight-gpu-title" lang="zh-CN"><a href="./eight-gpu/">8 GPU 并行训练示意</a></h2>
+          <p class="resource-description">Explore tensor, pipeline, and data parallelism on eight GPUs, then follow microbatches through an interactive 1F1B training timeline.</p>
+          <p class="resource-description-cn" lang="zh-CN">交互查看TP、PP、DP的分工与通信，并沿Microbatch时间线理解前向、反向、梯度同步和参数更新。</p>
+          <div class="resource-actions">
+            <a class="btn primary" href="./eight-gpu/">Open interactive demo <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </article>

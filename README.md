@@ -7,6 +7,7 @@ Personal academic homepage, published with GitHub Pages:
 
 - **OAT spin squeezing** — `demos/oat/`: exact finite-N moments, linked 3D/2D views, preparation time, alignment, and phase encoding.
 - **Linear shear** — `demos/oat/shear/`: the earlier demo, preserved with its sandboxed iframe and Content Security Policy.
+- **8-GPU parallel training** — `demos/eight-gpu/`: TP/PP/DP allocation and communication, plus an interactive Microbatch/1F1B timeline. Mirrored from the saved Site with its original sandboxed visualizations and Content Security Policy preserved.
 
 The homepage and demos are static HTML/CSS/JavaScript; no build step is needed.
 All demo asset links are relative so the site also works under the `/fanyd/` project path.
