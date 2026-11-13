@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#122c35">
+  <meta name="description" content="动手理解 AlphaQubit 2：测量如何切成时间组，隐藏状态怎样穿过 RNN，以及 Transformer 与流式分块如何工作。">
+  <title>AlphaQubit 2 · 网络结构图解</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="architecture.css">
+  <link rel="stylesheet" href="streaming.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到演示</a>
+  <header class="site-header">
+    <a class="brand" href="#architecture" aria-label="AlphaQubit 2 数据流实验室首页">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="7" stroke="currentColor"/><path d="M10 16h12M16 10v12" stroke="currentColor" opacity=".55"/><circle cx="16" cy="16" r="4" fill="currentColor"/></svg>
+      <span>AlphaQubit <b>2</b><small>网络结构图解</small></span>
+    </a>
+    <div class="header-right"><span class="header-note">A visual guide to the decoder</span><button class="btn header-button" id="about-open" type="button">阅读说明 <span aria-hidden="true">↗</span></button></div>
+  </header>
+  <main id="main">
+    <a class="homepage-back" href="../">← Fan Yidian · Demos</a>
+    <div class="intro">
+      <div><p class="eyebrow">INTERACTIVE READING · 网络与时间</p><h1>沿着结构图，理解 AlphaQubit 2。</h1><p class="intro-copy">沿用论文的时空结构，展开每一层的输入、隐藏状态与信息交换。切换步骤，在图上跟随数据的去向。</p></div>
+      <div class="model-label"><span class="status-dot"></span>AQ2-full<span class="muted">代表配置</span></div>
+    </div>
+    <div class="workspace-tabs" role="tablist" aria-label="演示页面">
+      <button type="button" id="tab-architecture" class="workspace-tab active" role="tab" aria-selected="true" aria-controls="arch-view"><span class="tab-index">01</span><span>网络结构与数据流<small>逐层展开，标注数据与维度</small></span></button>
+      <button type="button" id="tab-streaming" class="workspace-tab" role="tab" aria-selected="false" aria-controls="stream-view"><span class="tab-index">02</span><span>流式处理与状态接续<small>时空结构中的分块与并行</small></span></button>
+    </div>
+    <section id="arch-view" role="tabpanel" aria-labelledby="tab-architecture"></section>
+    <section id="stream-view" role="tabpanel" aria-labelledby="tab-streaming" hidden></section>
+    <aside class="scope-note"><span aria-hidden="true">ⓘ</span><p><strong>阅读约定。</strong>横向表示时间，纵向表示网络深度；实线表示层间特征传递，虚线表示同一 RNN 层的时间记忆。图解依据 AQ2-full，非 AQ2-RT。</p></aside>
+  </main>
+  <footer class="site-footer"><span>基于 <cite>A scalable and real-time neural decoder for topological quantum codes</cite></span><a href="https://arxiv.org/abs/2512.07737" target="_blank" rel="noopener noreferrer">阅读论文 <span aria-hidden="true">↗</span></a></footer>
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <div class="dialog-top"><p class="eyebrow">ABOUT THIS EXPLAINER</p><button class="btn ghost" id="about-close" aria-label="关闭说明" type="button">×</button></div>
+    <h2 id="about-title">怎样阅读这张时空网络图</h2>
+    <p>依据提供的 ICLR 2027 格式预印本：图 1、图 6–7，附录 A.1 和 A.5。公开链接的版本可能略有不同。</p>
+    <dl class="about-definitions">
+      <div><dt>网络配置</dt><dd>AQ2-full 主干含 5 层 RNN、9 层空间 Transformer，稳定子特征 512 维；注意力有 16 个头，每头 key/value 32 维。主干不含卷积。</dd></div>
+      <div><dt>下标与方向</dt><dd>i 表示稳定子，t 表示物理测量轮，k 表示压缩后的时间组；上标 ℓ 表示 RNN 层。每一层都有自己的隐藏状态，只有实验开始时初始化为零。</dd></div>
+      <div><dt>组与块</dt><dd>仿真表面码每 6 轮压缩为一个时间组；若干时间组组成计算块。流式图用每块 4 组说明调度关系，不设定硬件计算耗时。颜色码与 Willow 的分组长度分别为 3、5。</dd></div>
+      <div><dt>流式含义</dt><dd>同一层 RNN 沿时间递推；空间 Transformer 可并行处理已到达的多个时间组。块与块之间保留每一层的隐藏状态。末帧处理后，readout 才生成最终逻辑预测。</dd></div>
+      <div><dt>公式与输出</dt><dd>图中的 z、u、h 是为讲解统一定义的中间特征记号。公式说明运算关系与已知维度；隐藏状态和 attention 权重不等于逐比特错误概率。</dd></div>
+    </dl>
+    <a class="btn primary" href="https://arxiv.org/abs/2512.07737" target="_blank" rel="noopener noreferrer">打开论文</a>
+  </dialog>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

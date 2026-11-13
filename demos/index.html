@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Demos | Fan Yidian (范益典)</title>
-  <meta name="description" content="Interactive visualizations of quantum dynamics, metrology, and parallel training by Fan Yidian." />
+  <meta name="description" content="Interactive visualizations of quantum error correction, quantum dynamics, metrology, and parallel training by Fan Yidian." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/resources.css" />
@@ -31,9 +31,23 @@
     <header class="page-header">
       <h1 class="page-title">Interactive Demos</h1>
       <p class="page-intro">Interactive visualizations of quantum systems and parallel training.</p>
-      <p class="page-intro-cn" lang="zh-CN">量子动力学、量子计量与多GPU并行训练的交互演示。</p>
+      <p class="page-intro-cn" lang="zh-CN">量子纠错、量子动力学、量子计量与多GPU并行训练的交互演示。</p>
     </header>
     <div class="resource-list">
+      <article class="resource-card" aria-labelledby="alphaqubit2-title">
+        <a class="resource-preview" href="./alphaqubit2/" aria-label="Open the AlphaQubit 2 architecture demo">
+          <img src="./alphaqubit2/preview.webp" width="1374" height="1011" alt="A time-by-network-depth diagram of the AlphaQubit 2 decoder, with recurrent states and spatial Transformer blocks." />
+        </a>
+        <div class="resource-body">
+          <p class="resource-category">QUANTUM ERROR CORRECTION</p>
+          <h2 class="resource-title" id="alphaqubit2-title" lang="zh-CN"><a href="./alphaqubit2/">AlphaQubit 2 · 网络结构图解</a></h2>
+          <p class="resource-description">A visual guide to the AQ2-full decoder: follow embeddings, recurrent states, spatial attention, and streaming execution.</p>
+          <p class="resource-description-cn" lang="zh-CN">逐层查看AQ2-full的网络结构与数据流，理解RNN、空间Transformer和流式状态接续。</p>
+          <div class="resource-actions">
+            <a class="btn primary" href="./alphaqubit2/">Open interactive demo <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
       <article class="resource-card" aria-labelledby="oat-title">
         <a class="resource-preview" href="./oat/" aria-label="Open the OAT spin-squeezing demo">
           <img src="./oat/preview.webp" width="1100" height="700" alt="A spin-squeezed covariance ellipsoid rotating around the z axis, with its projection onto the y–z plane." />

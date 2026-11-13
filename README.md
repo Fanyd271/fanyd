@@ -5,6 +5,7 @@ Personal academic homepage, published with GitHub Pages:
 
 ## Interactive demos
 
+- **AlphaQubit 2 architecture** — `demos/alphaqubit2/`: a layer-by-layer AQ2-full network explainer and streaming-state schedule, mirrored from the saved Site. KaTeX and its fonts are bundled locally; its MIT license is retained in `demos/alphaqubit2/vendor/katex/LICENSE`.
 - **OAT spin squeezing** — `demos/oat/`: exact finite-N moments, linked 3D/2D views, preparation time, alignment, and phase encoding.
 - **Linear shear** — `demos/oat/shear/`: the earlier demo, preserved with its sandboxed iframe and Content Security Policy.
 - **8-GPU parallel training** — `demos/eight-gpu/`: TP/PP/DP allocation and communication, plus an interactive Microbatch/1F1B timeline. Mirrored from the saved Site with its original sandboxed visualizations and Content Security Policy preserved.
