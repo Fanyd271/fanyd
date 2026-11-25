@@ -5,387 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fan Yidian (范益典) | Tsinghua University</title>
   <meta name="description" content="Ph.D. student at Tsinghua University. Research on quantum control and quantum information." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    /* ============================================================
-       CSS Variables — change these to restyle the whole page
-    ============================================================ */
-    :root {
-      --primary:       #1a365d;   /* dark navy */
-      --accent:        #2b6cb0;   /* medium blue */
-      --accent-light:  #ebf4ff;   /* very light blue */
-      --text:          #2d3748;
-      --text-muted:    #718096;
-      --bg:            #f7fafc;
-      --card-bg:       #ffffff;
-      --border:        #e2e8f0;
-      --radius:        8px;
-      --shadow:        0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
-      --shadow-hover:  0 4px 12px rgba(0,0,0,0.10);
-    }
-
-    /* ============================================================
-       Reset & Base
-    ============================================================ */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.65;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ============================================================
-       Navigation
-    ============================================================ */
-    nav {
-      position: fixed;
-      inset: 0 0 auto 0;
-      background: rgba(255, 255, 255, 0.93);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      z-index: 200;
-    }
-    .nav-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 28px;
-      height: 58px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-brand {
-      flex-shrink: 0;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--primary);
-      letter-spacing: -0.02em;
-    }
-    .nav-links { display: flex; gap: 4px; list-style: none; }
-    .nav-links a {
-      font-size: 13.5px;
-      font-weight: 500;
-      color: var(--text-muted);
-      padding: 6px 9px;
-      border-radius: 6px;
-      transition: background 0.15s, color 0.15s;
-    }
-    .nav-links a:hover { background: var(--accent-light); color: var(--accent); text-decoration: none; }
-
-    /* ============================================================
-       Main Container
-    ============================================================ */
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 78px 28px 60px;
-    }
-
-    /* ============================================================
-       Hero / Profile
-    ============================================================ */
-    .hero {
-      display: flex;
-      gap: 44px;
-      align-items: flex-start;
-      padding: 52px 0 44px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .photo-wrap {
-      flex-shrink: 0;
-      width: 148px;
-      height: 148px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid var(--border);
-      background: var(--accent-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-    .photo-wrap svg { width: 70px; height: 70px; fill: var(--accent); opacity: 0.35; }
-
-    .hero-body { flex: 1; min-width: 0; }
-
-    .hero-en {
-      font-size: 2.1rem;
-      font-weight: 700;
-      color: var(--primary);
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-    }
-    .hero-cn {
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      font-weight: 400;
-      margin: 4px 0 16px;
-    }
-
-    .hero-meta { font-size: 14.5px; color: var(--text); margin-bottom: 5px; }
-    .hero-meta strong { color: var(--primary); font-weight: 600; }
-    .hero-sub { font-size: 13.5px; color: var(--text-muted); margin-bottom: 22px; }
-
-    /* Contact / link buttons */
-    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 16px;
-      border-radius: 6px;
-      font-size: 13.5px;
-      font-weight: 500;
-      border: 1px solid var(--border);
-      background: var(--card-bg);
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.15s;
-      text-decoration: none;
-    }
-    .btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); text-decoration: none; }
-    .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .btn.primary:hover { background: var(--primary); border-color: var(--primary); }
-
-    /* ============================================================
-       Sections
-    ============================================================ */
-    section { padding: 42px 0; border-bottom: 1px solid var(--border); scroll-margin-top: 78px; }
-    section:last-child { border-bottom: none; }
-
-    .sec-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 22px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .sec-title::after {
-      content: '';
-      flex: 1;
-      height: 2px;
-      background: var(--accent-light);
-      border-radius: 2px;
-    }
-
-    /* ============================================================
-       About
-    ============================================================ */
-    .about-en {
-      font-size: 15px;
-      line-height: 1.85;
-      color: var(--text);
-      margin-bottom: 14px;
-    }
-    .about-cn {
-      font-size: 14px;
-      line-height: 1.85;
-      color: var(--text-muted);
-      border-left: 3px solid var(--accent-light);
-      padding-left: 14px;
-      margin-bottom: 28px;
-    }
-
-    /* Research interest tags */
-    .interest-label {
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      padding: 5px 13px;
-      background: var(--accent-light);
-      color: var(--accent);
-      border: 1px solid #bee3f8;
-      border-radius: 20px;
-      font-size: 13.5px;
-      font-weight: 500;
-    }
-
-    /* ============================================================
-       Publications
-    ============================================================ */
-    .pub-list { display: flex; flex-direction: column; gap: 14px; }
-
-    .pub-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 24px;
-      transition: box-shadow 0.2s;
-    }
-    .pub-card:hover { box-shadow: var(--shadow-hover); }
-
-    .pub-title {
-      font-size: 15px;
-      font-weight: 600;
-      line-height: 1.5;
-      margin-bottom: 7px;
-    }
-    .pub-title a { color: var(--text); }
-    .pub-title a:hover { color: var(--accent); }
-
-    .pub-authors {
-      font-size: 13.5px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-    .pub-authors .me { color: var(--text); font-weight: 600; }
-    .pub-equal { font-size: 11.5px; color: #999; }
-
-    .pub-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-
-    .badge {
-      display: inline-block;
-      padding: 3px 9px;
-      border-radius: 4px;
-      font-size: 11.5px;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
-    .badge-journal     { background: #e6fffa; color: #1d6a47; border: 1px solid #9ae6b4; }
-    .badge-conference  { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-    .badge-preprint    { background: #fff8f0; color: #9c4221; border: 1px solid #fbd38d; }
-
-    .pub-year { font-size: 13px; color: var(--text-muted); }
-
-    .pub-links { display: flex; gap: 7px; margin-top: 10px; }
-    .pub-link {
-      font-size: 12.5px;
-      font-weight: 500;
-      color: var(--accent);
-      padding: 2px 9px;
-      border: 1px solid #bee3f8;
-      border-radius: 4px;
-      transition: all 0.15s;
-    }
-    .pub-link:hover {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-      text-decoration: none;
-    }
-
-    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-
-    /* ============================================================
-       Education Timeline
-    ============================================================ */
-    .timeline { padding-left: 22px; position: relative; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 5px; top: 8px; bottom: 8px;
-      width: 2px;
-      background: var(--border);
-      border-radius: 2px;
-    }
-
-    .edu-item { position: relative; margin-bottom: 30px; }
-    .edu-item:last-child { margin-bottom: 0; }
-    .edu-item::before {
-      content: '';
-      position: absolute;
-      left: -20px; top: 7px;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 2px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--accent);
-    }
-
-    .edu-degree { font-size: 15px; font-weight: 600; color: var(--text); }
-    .edu-school  { font-size: 14px; font-weight: 500; color: var(--accent); margin-top: 3px; }
-    .edu-detail  { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
-
-    /* ============================================================
-       Awards
-    ============================================================ */
-    .award-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .award-item {
-      display: flex;
-      gap: 16px;
-      align-items: baseline;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-    .award-year {
-      flex-shrink: 0;
-      min-width: 56px;
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--accent);
-      background: var(--accent-light);
-      border: 1px solid #bee3f8;
-      border-radius: 4px;
-      padding: 1px 7px;
-      text-align: center;
-    }
-    .award-text { color: var(--text); }
-
-    /* ============================================================
-       Contact
-    ============================================================ */
-    .contact-body { font-size: 15px; }
-    .contact-body p { margin-bottom: 8px; }
-    .contact-addr { font-size: 13.5px; color: var(--text-muted); margin-top: 14px; line-height: 1.7; }
-
-    /* ============================================================
-       Footer
-    ============================================================ */
-    footer {
-      text-align: center;
-      padding: 30px 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      background: var(--card-bg);
-      border-top: 1px solid var(--border);
-    }
-    footer a { color: var(--accent); }
-
-    /* ============================================================
-       Responsive
-    ============================================================ */
-    @media (max-width: 900px) {
-      .nav-inner { gap: 16px; }
-      .nav-links { overflow-x: auto; min-width: 0; padding: 8px 2px; }
-      .nav-links li { flex-shrink: 0; }
-      .nav-links a { padding: 6px 8px; font-size: 12.5px; white-space: nowrap; }
-    }
-    @media (max-width: 600px) {
-      .hero { flex-direction: column; align-items: center; text-align: center; gap: 24px; }
-      .hero-btns { justify-content: center; }
-      .nav-inner { height: auto; min-height: 58px; flex-wrap: wrap; gap: 0; padding-top: 10px; padding-bottom: 4px; }
-      .nav-links { width: 100%; padding: 7px 0 9px; gap: 8px; }
-      .nav-links a { padding: 6px 3px; }
-      main { padding-top: 106px; }
-      section { scroll-margin-top: 112px; }
-      .hero-en { font-size: 1.7rem; }
-      .photo-wrap { width: 120px; height: 120px; }
-    }
-  </style>
+  <link rel="stylesheet" href="./assets/site.css" />
+  <link rel="stylesheet" href="./assets/home.css" />
+  <script src="./assets/site.js" defer></script>
+  <script src="./assets/quantum-carousel.js" defer></script>
 </head>
-<body>
+<body class="home-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <!-- ====== Navigation ====== -->
-<nav>
+<nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
-    <span class="nav-brand">Fan Yidian · 范益典</span>
-    <ul class="nav-links">
+    <a class="nav-brand" href="./"><span class="brand-symbol" aria-hidden="true">ψ</span><span>Fan Yidian · 范益典</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">Menu <span class="menu-icon" aria-hidden="true"></span></button>
+    <ul class="nav-links" id="primary-navigation">
       <li><a href="#about">About</a></li>
       <li><a href="#publications">Publications</a></li>
       <li><a href="#manuscripts">Manuscripts</a></li>
@@ -399,36 +32,89 @@
   </div>
 </nav>
 
-<main>
+<main id="main-content" class="home-main">
 
   <!-- ====== Hero ====== -->
-  <div class="hero">
-
-    <div class="photo-wrap">
-      <img src="avatar-cartoon-v2.png" alt="Cartoon portrait of Fan Yidian" />
-    </div>
-
-    <div class="hero-body">
-      <h1 class="hero-en">Fan Yidian</h1>
-      <div class="hero-cn">范益典</div>
-
+  <header class="hero" aria-labelledby="profile-name">
+    <div class="hero-copy">
+      <p class="hero-kicker">CONTROL THEORY × QUANTUM PHYSICS</p>
+      <div class="hero-identity">
+        <div class="photo-wrap">
+          <img src="avatar-cartoon-v2.png" alt="Cartoon portrait of Fan Yidian" width="108" height="108" />
+        </div>
+        <div>
+          <h1 class="hero-en" id="profile-name">Fan Yidian</h1>
+          <div class="hero-cn" lang="zh-CN">范益典</div>
+        </div>
+      </div>
       <p class="hero-meta">
         Ph.D. Student &nbsp;·&nbsp;
         <strong>Department of Automation</strong> &nbsp;·&nbsp;
         <strong>Tsinghua University</strong>
       </p>
       <p class="hero-sub">清华大学 自动化系 &nbsp;|&nbsp; Advisor: Prof. Re-Bing Wu (吴热冰)</p>
-
       <div class="hero-btns">
-        <a href="mailto:fyd20@tsinghua.org.cn" class="btn primary">✉ fyd20@tsinghua.org.cn</a>
-        <a href="https://www.researchgate.net/profile/Yidian-Fan/research" target="_blank" class="btn">ResearchGate</a>
+        <a href="mailto:fyd20@tsinghua.org.cn" class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>fyd20@tsinghua.org.cn</a>
+        <a href="https://www.researchgate.net/profile/Yidian-Fan/research" target="_blank" rel="noopener" class="btn">ResearchGate</a>
       </div>
     </div>
-  </div>
+    <div class="quantum-panel" data-quantum-carousel data-rotation-delay="8000" role="region" aria-roledescription="carousel" aria-label="Quantum physics illustrations">
+      <div class="quantum-slides">
+        <figure class="quantum-slide" id="quantum-slide-bloch" role="group" aria-roledescription="slide" aria-label="1 of 3: Quantum state geometry">
+          <div class="quantum-heading"><span>QUANTUM STATE GEOMETRY</span><span class="state-symbol" aria-hidden="true">|ψ⟩</span></div>
+          <img class="quantum-visual" src="./assets/quantum-state.svg" width="500" height="440" alt="Bloch sphere with coordinate axes, a quantum-state vector, and an illustrative control trajectory." />
+          <figcaption class="quantum-caption"><span>Bloch sphere · geometric illustration</span><span>An illustrative quantum-state trajectory</span></figcaption>
+          <div class="quantum-equation">
+            <span class="quantum-equation-label">Open quantum dynamics</span>
+            <math xmlns="http://www.w3.org/1998/Math/MathML" aria-label="Rho dot equals minus i over h bar times the commutator of H of u and t with rho, plus D of rho">
+              <mrow><mover><mi>ρ</mi><mo>˙</mo></mover><mo>=</mo><mo>−</mo><mfrac><mi>i</mi><mi>ℏ</mi></mfrac><mo>[</mo><mi>H</mi><mo>(</mo><mi>u</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>,</mo><mi>ρ</mi><mo>]</mo><mo>+</mo><mi mathvariant="script">D</mi><mo>(</mo><mi>ρ</mi><mo>)</mo></mrow>
+            </math>
+          </div>
+        </figure>
+        <figure class="quantum-slide" id="quantum-slide-gravity" role="group" aria-roledescription="slide" aria-label="2 of 3: Quantum gravity simulation" hidden>
+          <div class="quantum-heading"><span>QUANTUM GRAVITY SIMULATION</span><span class="state-symbol" aria-hidden="true">AdS</span></div>
+          <img class="quantum-visual" src="./assets/quantum-gravity.svg" width="500" height="440" alt="Conceptual gravitational geometry above two coupled quantum systems, illustrating a gravity-inspired quantum simulation rather than an actual spacetime wormhole." />
+          <figcaption class="quantum-caption"><span>SYK-inspired holography · conceptual schematic</span><a href="https://inqnet.caltech.edu/wormhole2022/" target="_blank" rel="noopener">Inspired by Jafferis et al. (2022)</a></figcaption>
+          <div class="quantum-equation">
+            <span class="quantum-equation-label">Coupled quantum systems</span>
+            <math xmlns="http://www.w3.org/1998/Math/MathML" aria-label="H equals H left plus H right plus g of t times V">
+              <mrow><mi>H</mi><mo>=</mo><msub><mi>H</mi><mi>L</mi></msub><mo>+</mo><msub><mi>H</mi><mi>R</mi></msub><mo>+</mo><mi>g</mi><mo>(</mo><mi>t</mi><mo>)</mo><mi>V</mi></mrow>
+            </math>
+          </div>
+        </figure>
+        <figure class="quantum-slide" id="quantum-slide-happy" role="group" aria-roledescription="slide" aria-label="3 of 3: HaPPY holographic quantum error correction" hidden>
+          <div class="quantum-heading"><span>HaPPY · HOLOGRAPHIC QEC</span><span class="state-symbol" aria-hidden="true">V</span></div>
+          <img class="quantum-visual" src="./assets/happy-code.svg" width="500" height="440" alt="A pentagonal hyperbolic tensor network for a HaPPY code, encoding bulk logical information into physical degrees of freedom on the boundary." />
+          <figcaption class="quantum-caption"><span>Perfect tensors · bulk-to-boundary encoding</span><a href="https://arxiv.org/abs/1503.06237" target="_blank" rel="noopener">Pastawski et al. (2015)</a></figcaption>
+          <div class="quantum-equation">
+            <span class="quantum-equation-label">Holographic encoding isometry</span>
+            <math xmlns="http://www.w3.org/1998/Math/MathML" aria-label="V maps the bulk Hilbert space to the boundary Hilbert space">
+              <mrow><mi>V</mi><mo>:</mo><msub><mi mathvariant="script">H</mi><mtext>bulk</mtext></msub><mo>→</mo><msub><mi mathvariant="script">H</mi><mtext>boundary</mtext></msub></mrow>
+            </math>
+          </div>
+        </figure>
+      </div>
+      <div class="carousel-controls">
+        <div class="carousel-pagination" role="group" aria-label="Choose an illustration">
+          <button class="carousel-tab" type="button" aria-controls="quantum-slide-bloch" aria-pressed="true" aria-label="Show quantum state geometry">Bloch</button>
+          <button class="carousel-tab" type="button" aria-controls="quantum-slide-gravity" aria-pressed="false" aria-label="Show quantum gravity simulation">Gravity</button>
+          <button class="carousel-tab" type="button" aria-controls="quantum-slide-happy" aria-pressed="false" aria-label="Show HaPPY holographic code">HaPPY</button>
+        </div>
+        <button class="carousel-toggle" type="button" aria-label="Pause automatic slide rotation">
+          <svg data-pause-icon viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3" height="12" rx="1"/><rect x="10" y="2" width="3" height="12" rx="1"/></svg>
+          <svg data-play-icon viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" hidden><path d="M4 2 14 8 4 14Z"/></svg>
+          <span>Pause</span>
+        </button>
+      </div>
+      <p class="carousel-status" aria-live="polite" aria-atomic="true">1 of 3: Quantum state geometry</p>
+      <noscript><p class="quantum-caption">Also explore <a href="./assets/quantum-gravity.svg">quantum gravity</a> and <a href="./assets/happy-code.svg">HaPPY code</a>.</p></noscript>
+    </div>
+  </header>
 
   <!-- ====== About ====== -->
   <section id="about">
     <h2 class="sec-title">About Me</h2>
+    <div class="section-content">
 
     <p class="about-en">
       I am a Ph.D. student in the
@@ -460,11 +146,13 @@
       <span class="tag">Open Quantum Systems</span>
       <span class="tag">Quantum Control Landscapes</span>
     </div>
+    </div>
   </section>
 
   <!-- ====== Publications ====== -->
   <section id="publications">
     <h2 class="sec-title">Publications</h2>
+    <div class="section-content">
     <div class="pub-list">
 
       <div class="pub-card">
@@ -623,10 +311,12 @@
       </div>
 
     </div>
+    </div>
   </section>
 
   <section id="manuscripts">
     <h2 class="sec-title">Manuscripts in Progress</h2>
+    <div class="section-content">
     <div class="pub-list">
 
       <div class="pub-card">
@@ -648,11 +338,13 @@
       </p>
 
     </div>
+    </div>
   </section>
 
   <!-- ====== Education ====== -->
   <section id="education">
     <h2 class="sec-title">Education</h2>
+    <div class="section-content">
     <div class="timeline">
 
       <div class="edu-item">
@@ -676,11 +368,13 @@
       </div>
 
     </div>
+    </div>
   </section>
 
   <!-- ====== Awards ====== -->
   <section id="awards">
     <h2 class="sec-title">Awards &amp; Honors</h2>
+    <div class="section-content">
     <ul class="award-list">
       <li class="award-item">
         <span class="award-year">2026</span>
@@ -719,11 +413,13 @@
         <span class="award-text">2nd Prize, National College Mathematics Competition (Non-Mathematics), Beijing Region &mdash; 全国大学生数学竞赛（非数学类）北京赛区二等奖</span>
       </li>
     </ul>
+    </div>
   </section>
 
   <!-- ====== Academic Service ====== -->
   <section id="service">
     <h2 class="sec-title">Academic Service</h2>
+    <div class="section-content">
     <ul class="award-list">
       <li class="award-item">
         <span class="award-year">2026</span>
@@ -735,11 +431,13 @@
         </span>
       </li>
     </ul>
+    </div>
   </section>
 
   <!-- ====== Contact ====== -->
   <section id="contact">
     <h2 class="sec-title">Contact</h2>
+    <div class="section-content">
     <div class="contact-body">
       <p>I am always happy to discuss topics related to quantum control, quantum information, and related areas. Feel free to reach out!</p>
       <p style="margin-top: 14px;">
@@ -750,12 +448,13 @@
         Beijing 100084, P.R. China
       </p>
     </div>
+    </div>
   </section>
 
 </main>
 
 <!-- ====== Footer ====== -->
-<footer>
+<footer class="site-footer">
   <p>© 2025 Fan Yidian (范益典) &nbsp;·&nbsp; Tsinghua University</p>
   <p style="margin-top: 6px;">
     <a href="https://www.researchgate.net/profile/Yidian-Fan/research" target="_blank">ResearchGate</a>

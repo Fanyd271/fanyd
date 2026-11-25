@@ -5,15 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Demos | Fan Yidian (范益典)</title>
   <meta name="description" content="Interactive visualizations of quantum error correction, quantum dynamics, metrology, and parallel training by Fan Yidian." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/site.css" />
   <link rel="stylesheet" href="../assets/resources.css" />
+  <script src="../assets/site.js" defer></script>
 </head>
-<body>
-  <nav aria-label="Main navigation">
+<body class="resource-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <nav class="site-nav" aria-label="Main navigation">
     <div class="nav-inner">
-      <a class="nav-brand" href="../">Fan Yidian · 范益典</a>
-      <ul class="nav-links">
+      <a class="nav-brand" href="../"><span class="brand-symbol" aria-hidden="true">ψ</span><span>Fan Yidian · 范益典</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">Menu <span class="menu-icon" aria-hidden="true"></span></button>
+    <ul class="nav-links" id="primary-navigation">
         <li><a href="../#about">About</a></li>
         <li><a href="../#publications">Publications</a></li>
         <li><a href="../#manuscripts">Manuscripts</a></li>
@@ -26,7 +28,7 @@
       </ul>
     </div>
   </nav>
-  <main>
+  <main id="main-content" class="resource-main">
     <p class="breadcrumbs"><a href="../">Home</a><span aria-hidden="true">/</span>Demos</p>
     <header class="page-header">
       <h1 class="page-title">Interactive Demos</h1>
@@ -44,7 +46,7 @@
           <p class="resource-description">A visual guide to the AQ2-full decoder: follow embeddings, recurrent states, spatial attention, and streaming execution.</p>
           <p class="resource-description-cn" lang="zh-CN">逐层查看AQ2-full的网络结构与数据流，理解RNN、空间Transformer和流式状态接续。</p>
           <div class="resource-actions">
-            <a class="btn primary" href="./alphaqubit2/">Open interactive demo <span aria-hidden="true">→</span></a>
+            <a class="btn primary" href="./alphaqubit2/">Open interactive demo</a>
           </div>
         </div>
       </article>
@@ -58,7 +60,7 @@
           <p class="resource-description">Explore spin squeezing, axis alignment, and phase encoding with linked 3D and 2D views.</p>
           <p class="resource-description-cn" lang="zh-CN">自旋压缩、对齐与相位编码的交互演示。</p>
           <div class="resource-actions">
-            <a class="btn primary" href="./oat/">Open interactive demo <span aria-hidden="true">→</span></a>
+            <a class="btn primary" href="./oat/">Open interactive demo</a>
           </div>
         </div>
       </article>
@@ -72,13 +74,13 @@
           <p class="resource-description">Explore tensor, pipeline, and data parallelism on eight GPUs, then follow microbatches through an interactive 1F1B training timeline.</p>
           <p class="resource-description-cn" lang="zh-CN">交互查看TP、PP、DP的分工与通信，并沿Microbatch时间线理解前向、反向、梯度同步和参数更新。</p>
           <div class="resource-actions">
-            <a class="btn primary" href="./eight-gpu/">Open interactive demo <span aria-hidden="true">→</span></a>
+            <a class="btn primary" href="./eight-gpu/">Open interactive demo</a>
           </div>
         </div>
       </article>
     </div>
   </main>
-  <footer>
+  <footer class="site-footer">
     <p>Fan Yidian (范益典) · Tsinghua University</p>
     <p><a href="../">Home</a> &nbsp;·&nbsp; <a href="../talks/">Talks &amp; Slides</a> &nbsp;·&nbsp; <a href="mailto:fyd20@tsinghua.org.cn">Email</a></p>
   </footer>
